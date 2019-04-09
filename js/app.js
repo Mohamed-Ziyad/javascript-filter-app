@@ -75,3 +75,73 @@
 		});
 	});
 })();
+
+//lightbox
+(function() {
+	//all the imges
+	let imageList = [];
+	let counter = 0;
+
+	//variable
+	const images = document.querySelectorAll('.store-img');
+	const container = document.querySelector('.lightbox-container');
+	const item = document.querySelector('.lightbox-item');
+	const closeIcon = document.querySelector('.lightbox-close');
+	const btnLeft = document.querySelector('.btnLeft');
+	const btnRight = document.querySelector('.btnRight');
+
+	//add all images to the array with links
+	images.forEach(function(img) {
+		imageList.push(img.src);
+	});
+	//console.log(imageList);
+
+	//show model
+	images.forEach(function(img) {
+		img.addEventListener('click', function(event) {
+			//display model
+			container.classList.add('show');
+
+			//get source
+			let src = event.target.src;
+			//console.log(src);
+
+			//get the inder of img
+			counter = imageList.indexOf(src);
+			//console.log(counter);
+
+			//change the image
+			//show model with exact img
+			item.style.backgroundImage = `url(${src})`;
+		});
+	});
+
+	//close model
+	closeIcon.addEventListener('click', function() {
+		container.classList.remove('show');
+	});
+
+	//left button
+	btnLeft.addEventListener('click', function() {
+		counter--;
+		//preventing negative number
+		if (counter < 0) {
+			counter = imageList.length - 1;
+		}
+		//getting the image from array
+		item.style.backgroundImage = `url(${imageList[counter]})`;
+		console.log(counter);
+	});
+
+	//right button
+	btnRight.addEventListener('click', function() {
+		counter++;
+		//stop exceeding from array length
+		if (counter > imageList.length - 1) {
+			counter = 0;
+		}
+		//getting the image from array
+		item.style.backgroundImage = `url(${imageList[counter]})`;
+		console.log(counter);
+	});
+})();
